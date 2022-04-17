@@ -1,0 +1,50 @@
+<snippet>
+	<content><![CDATA[
+bool isComposite(int n, int a, int d, int s) {
+    int base = a, e = d, mod = n;
+    int result = 1;
+    base %= mod;
+    while (e) {
+        if (e & 1)
+            result = result * base % mod;
+        base = base * base % mod;
+        e >>= 1;
+    }
+    
+    int x = result;
+
+    if (x == 1 || x == n - 1)
+        return false;
+    for (int r = 1; r < s; r++) {
+        x = (int)x * x % n;
+        if (x == n - 1)
+            return false;
+    }
+    return true;
+}
+
+bool isPrime(int n) {
+    if (n < 2)
+        return false;
+
+    int r = 0;
+    int d = n - 1;
+    while ((d & 1) == 0) {
+        d >>= 1;
+        r++;
+    }
+
+    for (int a : {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37}) {
+        if (n == a)
+            return true;
+        if (isComposite(n, a, d, r))
+            return false;
+    }
+    return true;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>primality-check</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
